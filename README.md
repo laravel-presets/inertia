@@ -26,7 +26,7 @@ This Laravel preset scaffolds an application using **LIT** stack, jumpstarting y
 | ------------------------------- | -------------------------------- | ---------------------------------------- |
 | PHP framework                   | Modern monolith                  | Utility-first CSS framework              |
 
-The **LIT** stack becomes the **VLIT** stack if [Vue](https://vuejs.org) is added, or the **LITR** stack with [React](https://reactjs.org) instead.
+The **LIT** stack becomes the **VITL** stack if [Vue](https://vuejs.org) is added, or the **LITR** stack with [React](https://reactjs.org) instead.
 
 # Installation
 
@@ -38,7 +38,7 @@ This preset is intended to be installed into a fresh Laravel application. Follow
 npx use-preset laravel-inertia --vue
 ```
 
-> Currently, only the VLIT stack is available. If you don't want to use Vue, use the `--no-vue` flag instead.
+> Currently, only the VITL stack is available. If you don't want to use Vue, use the `--no-vue` flag instead.
 
 # To-do
 
