@@ -43,4 +43,4 @@ npx use-preset laravel-inertia --vue
 # To-do
 
 - Add a React scaffolding
-- Add an authentication scaffolding
+- Add an authentication scaffolding with tests
