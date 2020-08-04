@@ -48,6 +48,7 @@ jobs:
       - name: Compile front-end
         run: |
           cd ../app
+          yarn
           yarn dev
 
       - name: Execute tests
