@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 
-class InertiaJsServiceProvider extends ServiceProvider
+class InertiaServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -15,7 +15,6 @@ class InertiaJsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerMixVersion();
-        $this->shareApplication();
         $this->shareAuthentification();
         $this->shareFlashes();
     }

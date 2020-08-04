@@ -13,12 +13,14 @@ module.exports = Preset.make('Laravel Inertia')
 	.editJson('package.json')
 		.title('Add Node dependencies')
 		.merge({
-			'@babel/plugin-syntax-dynamic-import': '^7.2.0',
-			'@inertiajs/inertia': '^0.1',
-			'@inertiajs/inertia-vue': '^0.1',
-			'vue-template-compiler': '^2.6.10',
-			'vue-meta': '^2.3.1',
-			vue: '^2.5.17',
+			devDependencies: {
+				'@babel/plugin-syntax-dynamic-import': '^7.2.0',
+				'@inertiajs/inertia': '^0.1',
+				'@inertiajs/inertia-vue': '^0.1',
+				'vue-template-compiler': '^2.6.10',
+				'vue-meta': '^2.3.1',
+				vue: '^2.5.17',
+			}
 		})
 		.chain()
 
@@ -30,9 +32,13 @@ module.exports = Preset.make('Laravel Inertia')
 		})
 		.chain()
 
+	.delete(['resources/js/bootstrap.js', 'resources/views/welcome.blade.php'])
+		.title('Remove JavaScript bootstrap file and default view')
+		.chain()
+
 	.copyDirectory('default')
 		.to('/')
-		.title('Copy templates')
+		.title('Install default scaffolding')
 		.whenConflict('override')
 		.chain()
 	
