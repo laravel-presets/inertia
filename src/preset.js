@@ -2,6 +2,9 @@ const { Preset } = require('use-preset');
 
 // prettier-ignore
 module.exports = Preset.make('Laravel Inertia')
+	.option('vue', true)
+	.option('interaction', true)
+
 	.apply('use-preset/laravel-tailwindcss')
 		.title('Install Tailwind CSS from its preset')
 		.with('--no-interaction')
@@ -27,8 +30,34 @@ module.exports = Preset.make('Laravel Inertia')
 		})
 		.chain()
 
+	.copyDirectory('default')
+		.to('/')
+		.title('Copy templates')
+		.whenConflict('override')
+		.chain()
+	
+	.copyDirectory('vue')
+		.to('/')
+		.title('Install Vue scaffolding')
+		.if(({ flags }) => Boolean(flags.vue))
+		.whenConflict('override')
+		.chain()
+
 	.edit('config/app.php')
+		.title('Register service provider')
 		.search(/App\\Providers\\RouteServiceProvider::class,/)
 			.addAfter('App\\Providers\\InertiaServiceProvider::class,')
 			.end()
 		.chain()
+
+	.installDependencies()
+		.if(({ flags }) => Boolean(flags.interaction))
+		.for('node')
+		.title('Install Node dependencies')
+		.chain()
+
+	.updateDependencies()
+		.if(({ flags }) => Boolean(flags.interaction))
+		.for('php')
+		.title('Install PHP dependencies')
+		.chain();
