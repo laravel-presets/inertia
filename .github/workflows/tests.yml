@@ -1,0 +1,51 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [7.4]
+        laravel: [^7.0]
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip
+          coverage: none
+
+      - name: Create Laravel app
+        run: composer create-project laravel/laravel=${{ matrix.laravel }} ../app --prefer-dist
+
+      - name: Install preset
+        run: |
+          cd ../app
+          npx use-preset laravel-inertia --vue --debug --no-interaction
+
+      - name: Install dependencies
+        run: |
+          cd ../app
+          composer update
+
+      - name: Execute tests
+        run: |
+          cd ../app
+          vendor/bin/phpunit --verbose
