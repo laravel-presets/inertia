@@ -45,6 +45,11 @@ jobs:
           cd ../app
           composer update
 
+      - name: Compile front-end
+        run: |
+          cd ../app
+          yarn dev
+
       - name: Execute tests
         run: |
           cd ../app
