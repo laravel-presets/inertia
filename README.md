@@ -20,7 +20,7 @@
 
 # About
 
-This Laravel preset scaffolds an application using **LIT** stack, jumpstarting your application's development. If you are not familiar with the name, it is an acronym that describes the main technologies involved in the stack:
+This Laravel preset scaffolds an application using the **LIT** stack, jumpstarting your application's development. If you are not familiar with the name, it is an acronym that describes the main technologies involved in the stack:
 
 | [Laravel](https://laravel.com/) | [Inertia](https://inertiajs.com) | [Tailwind CSS](https://tailwindcss.com/) |
 | ------------------------------- | -------------------------------- | ---------------------------------------- |
