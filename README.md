@@ -42,7 +42,7 @@ npx use-preset laravel-inertia --vue
 
 # Code-splitting
 
-Code-splitting should be enabled if you have a large application. When code-splitting is used, it requires that the user download new assets as they navigate from one page to the next, which adds latency.
+Code-splitting should be enabled if you have a large application. When code-splitting is used, it requires that the user download new assets as they navigate from one page to the next, which adds latency. When it is not, the first page load may take longer. This is a trade-off.
 
 To enable code-splitting, uncomment the line in your `app.js` that makes `resolveComponent` use `import`, and remove the previous line. For more information, check out the [instructions](https://inertiajs.com/client-side-setup#code-splitting) on the Inertia documentation.
 
