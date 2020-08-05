@@ -40,6 +40,12 @@ npx use-preset laravel-inertia --vue
 
 > Currently, only the VITL stack is available. If you don't want to use Vue, use the `--no-vue` flag instead.
 
+# Code-splitting
+
+Code-splitting should be enabled if you have a large application. When code-splitting is used, it requires that the user download new assets as they navigate from one page to the next, which adds latency.
+
+To enable code-splitting, uncomment the line in your `app.js` that makes `resolveComponent` use `import`, and remove the previous line. For more information, check out the [instructions](https://inertiajs.com/client-side-setup#code-splitting) on the Inertia documentation.
+
 # To-do
 
 - Add a React scaffolding
