@@ -24,9 +24,6 @@ mix
 			},
 		},
 	})
-	.babelConfig({
-		plugins: ['@babel/plugin-syntax-dynamic-import'],
-	})
 	.sourceMaps();
 
 if (mix.inProduction()) {
