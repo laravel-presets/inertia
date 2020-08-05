@@ -13,7 +13,7 @@ const { plugins } = require('./postcss.config');
  */
 
 mix
-	.js('resources/js/app.js', 'public/build/app.js')
+	.js('resources/js/app.js', 'public/build')
 	.postCss('resources/css/app.css', 'public/build', plugins)
 	.webpackConfig({
 		output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
