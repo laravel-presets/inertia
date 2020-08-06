@@ -55,4 +55,3 @@ To enable code-splitting, uncomment the line in your `app.js` that makes `resolv
 - Add a React scaffolding (contributions welcome!)
 - Add tests to authentication scaffolding
 - Organize Vue's authentication scaffolding into components
-- Make Vue's authentication scaffolding responsive
