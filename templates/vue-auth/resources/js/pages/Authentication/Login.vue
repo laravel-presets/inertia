@@ -19,17 +19,11 @@
 					autocomplete="email"
 					class="px-2 py-2 border border-gray-200 rounded-md focus:shadow-outline focus:outline-none"
 				/>
-				<small
-					class="mt-2 text-red-600"
-					v-if="emailError"
-					v-html="emailError"
-				/>
+				<small class="mt-2 text-red-600" v-if="emailError" v-html="emailError" />
 			</div>
 
 			<div class="flex flex-col px-8 mb-8">
-				<label for="password" class="mb-2 font-medium text-gray-600"
-					>Password</label
-				>
+				<label for="password" class="mb-2 font-medium text-gray-600">Password</label>
 				<input
 					type="password"
 					id="password"
@@ -37,23 +31,12 @@
 					autocomplete="current-password"
 					class="px-2 py-2 border border-gray-200 rounded-md focus:shadow-outline focus:outline-none"
 				/>
-				<small
-					class="mt-2 text-red-600"
-					v-if="passwordError"
-					v-html="passwordError"
-				/>
+				<small class="mt-2 text-red-600" v-if="passwordError" v-html="passwordError" />
 			</div>
 
-			<div
-				class="flex items-center justify-between px-8 py-4 bg-gray-100 border border-gray-200 border-t-1"
-			>
+			<div class="flex items-center justify-between px-8 py-4 bg-gray-100 border border-gray-200 border-t-1">
 				<label for="remember" class="flex items-center select-none">
-					<input
-						id="remember"
-						v-model="form.remember"
-						type="checkbox"
-						class="mr-1"
-					/>
+					<input id="remember" v-model="form.remember" type="checkbox" class="mr-1" />
 					<span class="text-sm">Remember Me</span>
 				</label>
 

@@ -1,15 +1,7 @@
 <template>
 	<div class="flex flex-col items-center justify-center h-full">
 		<h1 class="mb-0 text-6xl font-thin text-gray-200">Inertia</h1>
-		<div
-			:class="[
-				'flex items-center',
-				'text-xl font-medium',
-				'italic uppercase',
-				'tracking-widest',
-				'text-pink-300',
-			]"
-		>
+		<div class="flex items-center text-xl font-medium italic uppercase tracking-widest text-pink-300">
 			<span>The Modern Monolith</span>
 			<svg class="w-8 h-8 ml-2" viewBox="0 0 24 24">
 				<path
