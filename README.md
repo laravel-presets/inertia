@@ -35,10 +35,14 @@ This preset is intended to be installed into a fresh Laravel application. Follow
 **Then, run the following command**:
 
 ```bash
-npx use-preset laravel-inertia --vue
+npx use-preset laravel-inertia
 ```
 
-> Currently, only the VITL stack is available. If you don't want to use Vue, use the `--no-vue` flag instead.
+By default, the preset installs the VILT stack. If you wish to not use Vue, you can use the `--no-vue` flag.
+
+# Authentication scaffolding
+
+The authentication system is copied into your project, so you don't need to use `laravel/ui`. Additionally, it uses the [Single Action Controller](https://driesvints.com/blog/the-beauty-of-single-action-controllers/) approach.
 
 # Code-splitting
 
@@ -48,5 +52,6 @@ To enable code-splitting, uncomment the line in your `app.js` that makes `resolv
 
 # To-do
 
-- Add a React scaffolding
-- Add an authentication scaffolding with tests
+- Add a React scaffolding (contributions welcome!)
+- Add tests to authentication scaffolding
+- Organize Vue's authentication scaffolding into components

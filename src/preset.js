@@ -3,6 +3,7 @@ const { Preset } = require('use-preset');
 // prettier-ignore
 module.exports = Preset.make('Laravel Inertia')
 	.option('vue', true)
+	.option('auth', true)
 	.option('interaction', true)
 
 	.apply('use-preset/laravel-tailwindcss')
@@ -36,16 +37,34 @@ module.exports = Preset.make('Laravel Inertia')
 		.title('Remove JavaScript bootstrap file and default view')
 		.chain()
 
+	// Always install the default Inertia scaffolding
 	.copyDirectory('default')
 		.to('/')
 		.title('Install default scaffolding')
 		.whenConflict('override')
 		.chain()
 	
+	// Install the Vue base scaffolding
 	.copyDirectory('vue')
 		.to('/')
 		.title('Install Vue scaffolding')
 		.if(({ flags }) => Boolean(flags.vue))
+		.whenConflict('override')
+		.chain()
+
+	// Install the base authentication scaffolding
+	.copyDirectory('auth')
+		.to('/')
+		.title('Install authentication scaffolding')
+		.if(({ flags }) => Boolean(flags.auth))
+		.whenConflict('override')
+		.chain()
+
+	// Install the Vue authentication scaffolding
+	.copyDirectory('vue-auth')
+		.to('/')
+		.title('Install Vue authentication scaffolding')
+		.if(({ flags }) => Boolean(flags.vue) && Boolean(flags.auth))
 		.whenConflict('override')
 		.chain()
 
@@ -54,6 +73,12 @@ module.exports = Preset.make('Laravel Inertia')
 		.search(/App\\Providers\\RouteServiceProvider::class,/)
 			.addAfter('App\\Providers\\InertiaServiceProvider::class,')
 			.end()
+		.chain()
+
+	.edit('app/Providers/RouteServiceProvider.php')
+		.title('Update route configuration')
+		.replace(`public const HOME = '/home';`).with(`public const HOME = '/';`)
+		.replace(`$namespace = 'App\\Http\\Controllers'`).with(`$namespace = ''`)
 		.chain()
 
 	.installDependencies()
