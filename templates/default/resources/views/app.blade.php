@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full min-h-screen antialised">
+<html class="h-full min-h-screen antialiased">
 	<head>
 		<meta charset="utf-8" />
 		<meta
