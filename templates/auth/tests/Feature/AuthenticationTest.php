@@ -31,7 +31,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test **/
-    public function it_redirects_if_already_logged_in()
+    public function a_user_is_redirected_to_home_if_already_logged_in()
     {
         $user = factory(User::class)->create();
         $this->be($user);
@@ -41,7 +41,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test **/
-    public function email_and_password_are_required()
+    public function an_email_and_a_password_are_required()
     {
         $this
             ->followingRedirects()
