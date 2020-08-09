@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
+use Tests\Traits\TestsInertia;
 
 class AuthenticationTest extends TestCase
 {
