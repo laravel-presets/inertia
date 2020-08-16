@@ -54,7 +54,12 @@ final class Login
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+        // Throws an exception when the login attempt failed.
+        throw ValidationException::withMessages([
+            $this->identifier => [
+                trans('auth.failed'),
+            ],
+        ]);
     }
 
     /**
@@ -90,17 +95,5 @@ final class Login
         return $request->wantsJson()
             ? response()->noContent()
             : redirect()->intended($this->redirectTo);
-    }
-
-    /**
-     * Get the failed login response instance.
-     */
-    protected function sendFailedLoginResponse()
-    {
-        throw ValidationException::withMessages([
-            $this->identifier => [
-                trans('auth.failed'),
-            ],
-        ]);
     }
 }
