@@ -25,7 +25,7 @@ class InertiaServiceProvider extends ServiceProvider
     public function registerMixVersion()
     {
         Inertia::version(function () {
-            md5_file(public_path('mix-manifest.json'));
+            return md5_file(public_path('mix-manifest.json'));
         });
     }
 
