@@ -65,6 +65,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd ../app
+          yarn
           composer update
 
       - name: Compile front-end
