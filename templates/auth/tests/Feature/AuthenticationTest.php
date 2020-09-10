@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function a_user_can_login()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt('test-password'),
         ]);
 
@@ -34,7 +34,7 @@ class AuthenticationTest extends TestCase
     /** @test **/
     public function a_user_is_redirected_to_home_if_already_logged_in()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->be($user);
 
         $this->get(route('login'))
@@ -49,7 +49,7 @@ class AuthenticationTest extends TestCase
             ->post(route('login.attempt'), [
                 'email'    => '',
                 'password' => '',
-                ])
+            ])
             ->assertPropertyEquals('errors', [
                 'email'    => [__('validation.required', ['attribute' => 'email'])],
                 'password' => [__('validation.required', ['attribute' => 'password'])],
