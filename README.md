@@ -33,7 +33,7 @@
   It's based on <a href="https://github.com/laravel/jetstream">Jetstream</a> and <a href="https://github.com/laravel/breeze">Breeze</a>.
   <br />
   <br />
-  <a href="https://github.com/laravel-presets/inertia/blob/master/preset.ts">See the code</a> - <a href="https://usepreset.dev">Preset documentation</a> - <a href="http://inertiajs.com/">Inertia website</a>
+  <a href="https://github.com/laravel-presets/inertia/blob/main/preset.ts">See the code</a> - <a href="https://usepreset.dev">Preset documentation</a> - <a href="http://inertiajs.com/">Inertia website</a>
 </div>
 
 <p align="center">
