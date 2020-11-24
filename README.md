@@ -1,61 +1,46 @@
 <p align="center">
-  <h1 align="center">Laravel Inertia</h1>
-  <p align="center">
-    <a href="https://github.com/use-preset/use-preset/actions">
-      <img alt="Build status" src="https://github.com/use-preset/laravel-inertia/workflows/tests/badge.svg">
-    </a>
-    &nbsp;
-    <a href="https://github.com/use-preset/use-preset/releases">
-      <img alt="npx use-preset laravel-inertia" src="https://img.shields.io/badge/use--preset-laravel--inertia-blue">
-    </a>
-    &nbsp;
-    <a href="https://www.npmjs.com/package/use-preset">
-      <img alt="use-preset version" src="https://img.shields.io/npm/v/use-preset?color=32c854&label=use-preset">
-    </a>
-  </p>
   <br />
-  <p align="center">
-    <b>Preset</b> is a project-modifying tool. <a href="https://usepreset.dev/">Read the documentation</a> for more information.
-  </p>
+  <a href="https://usepreset.dev">
+    <img width="100" src="https://raw.githubusercontent.com/use-preset/cli/main/.github/assets/logo.svg" alt="Logo of the Preset tool">
+  </a>
   <br />
-  <pre align="center">npx use-preset laravel-inertia</pre>
-  &nbsp;
-<p>
+</p>
 
-# About
+<h2 align="center">Inertia for Laravel</h2>
 
-This Laravel preset scaffolds an application using the **LIT** stack, jumpstarting your application's development. If you are not familiar with the name, it is an acronym that describes the main technologies involved in the stack:
+<p align="center">
+  <br />
+  <a href="https://www.npmjs.com/package/use-preset">
+    <img alt="npm" src="https://img.shields.io/npm/v/use-preset?label=preset">
+  </a>
+  <span>&nbsp;</span>
+  <a href="https://discord.gg/XWwzc45KZu">
+    <img alt="npm" src="https://img.shields.io/static/v1?label=discord&message=join&logo=discord&color=7289da">
+  </a>
+  <span>&nbsp;</span>
+  <a href="https://discord.gg/XWwzc45KZu">
+    <img alt="npm" src="https://img.shields.io/static/v1?label=documentation&message=read&color=0475b6">
+  </a>
+  <br />
+  <br />
+  <pre align="center">npx use-preset laravel:inertia</pre>
+</p>
+<br />
 
-| [Laravel](https://laravel.com/) | [Inertia](https://inertiajs.com) | [Tailwind CSS](https://tailwindcss.com/) |
-| ------------------------------- | -------------------------------- | ---------------------------------------- |
-| PHP framework                   | Modern monolith                  | Utility-first CSS framework              |
+<div align="center">
+  This preset scaffolds an Inertia installation with authentication to a fresh Laravel preset.
+  <br />
+  It's based on <a href="https://github.com/laravel/jetstream">Jetstream</a> and <a href="https://github.com/laravel/breeze">Breeze</a>.
+  <br />
+  <br />
+  <a href="https://github.com/laravel-presets/inertia/blob/master/preset.ts">See the code</a> - <a href="https://usepreset.dev">Preset documentation</a> - <a href="http://inertiajs.com/">Inertia website</a>
+</div>
 
-The **LIT** stack becomes the **VITL** stack if [Vue](https://vuejs.org) is added, or the **LITR** stack with [React](https://reactjs.org) instead.
-
-# Installation
-
-This preset is intended to be installed into a fresh Laravel application. Follow the [Laravel installation instructions](https://laravel.com/docs/7.x/installation) to ensure you have a working environment before continuing.
-
-**Then, run the following command**:
-
-```bash
-npx use-preset laravel-inertia
-```
-
-By default, the preset installs the VILT stack. If you wish to not use Vue, you can use the `--no-vue` flag.
-
-# Authentication scaffolding
-
-The authentication system is copied into your project, so you don't need to use `laravel/ui`. Additionally, it uses the [Single Action Controller](https://driesvints.com/blog/the-beauty-of-single-action-controllers/) approach.
-
-# Code-splitting
-
-Code-splitting should be enabled if you have a large application. When code-splitting is used, it requires that the user download new assets as they navigate from one page to the next, which adds latency. When it is not, the first page load may take longer. This is a trade-off.
-
-To enable code-splitting, uncomment the line in your `app.js` that makes `resolveComponent` use `import`, and remove the previous line. For more information, check out the [instructions](https://inertiajs.com/client-side-setup#code-splitting) on the Inertia documentation.
-
-# To-do
-
-- Add a React scaffolding (contributions welcome!)
-- Add register, confirm password, reset password, send verification email, and verify email functionalities
-- Organize Vue's authentication scaffolding into components
+<p align="center">
+  <br />
+  <br />
+  ·
+  <br />
+  <br />
+  <sub>Built with ❤︎ by <a href="https://github.com/enzoinnocenzi">Enzo Innocenzi</a>
+</p>

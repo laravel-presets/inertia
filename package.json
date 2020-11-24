@@ -1,14 +1,19 @@
 {
-	"name": "laravel-inertia",
+	"name": "@laravel-presets/inertia",
+	"version": "0.1",
+	"author": "Enzo Innocenzi",
 	"license": "MIT",
-	"preset": "src/preset.js",
-	"version": "0.0.4",
-	"private": "true",
-	"devDependencies": {
-		"use-preset": "^0",
-		"standard-version": "^8.0.2"
+	"preset": "preset.ts",
+	"prettier": {
+		"printWidth": 100,
+		"tabWidth": 2,
+		"trailingComma": "all",
+		"singleQuote": true,
+		"arrowParens": "always",
+		"useTabs": true,
+		"semi": true
 	},
-	"scripts": {
-		"release": "standard-version --skip.changelog"
+	"devDependencies": {
+		"use-preset": "^0.2"
 	}
 }

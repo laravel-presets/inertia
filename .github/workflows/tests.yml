@@ -8,32 +8,13 @@ on:
 
 jobs:
   run:
-    name: P${{ matrix.php }} - L${{ matrix.laravel }}
     runs-on: ubuntu-latest
-
-    env:
-      DB_CONNECTION: mysql
-      DB_DATABASE: laravel
-      DB_USERNAME: root
-      DB_PASSWORD: password
-
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: laravel
-        ports:
-          - 3306/tcp
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     strategy:
       fail-fast: false
       matrix:
         php: [7.4]
         laravel: [^8.0]
-
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -51,31 +32,25 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip
           coverage: none
 
-      - name: Start mysql service
-        run: sudo /etc/init.d/mysql start
-
       - name: Create Laravel app
         run: composer create-project laravel/laravel=${{ matrix.laravel }} ../app --prefer-dist
 
       - name: Install preset
         run: |
           cd ../app
-          npx use-preset laravel-inertia --vue --debug --no-interaction
+          npx use-preset laravel:inertia --no-interaction --no-ssh -vv
 
       - name: Install dependencies
         run: |
           cd ../app
-          yarn
           composer update
 
       - name: Compile front-end
         run: |
           cd ../app
-          yarn prod --verbose
+          npm run dev
 
       - name: Execute tests
         run: |
           cd ../app
           vendor/bin/phpunit --verbose
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
