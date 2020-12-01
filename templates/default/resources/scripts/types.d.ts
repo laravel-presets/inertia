@@ -1,4 +1,8 @@
-// TODO: PR inertia
+declare module "*.vue" {
+    import { defineComponent } from "vue";
+    const _default: ReturnType<typeof defineComponent>;
+    export default _default;
+}
 
 type CustomPageProps<T> = T & { errors: { [key: string]: string } };
 
