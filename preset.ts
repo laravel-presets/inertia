@@ -17,25 +17,61 @@ Preset.extract('default').withTitle(`Extracting default scaffolding...`);
 
 // Updates the Mix file to use TypeScript
 Preset.group((preset) => {
-	// Updates Mix
+	// Updates .gitignore
 	preset
-		.edit('webpack.mix.js')
+		.edit('.gitignore')
+		.addAfter('yarn-error.log', [
+			'public/js',
+			'public/css',
+			'resources/scripts/generated',
+			'temp/',
+		]);
+
+	// Updates Mix
+	const mixConfig = preset.edit('webpack.mix.js');
+
+	mixConfig.addAfter('laravel-mix', "const { exec } = require('child_process');");
+
+	mixConfig.addBefore('mix.ts', [
+		"mix.extend('ziggy', {",
+		'	boot() {',
+		"		const command = () => exec('php artisan ziggy:generate resources/scripts/generated/ziggy.js');",
+		'',
+		'		command();',
+		'',
+		'		if(Mix.isWatching()) {',
+		"			require('chokidar').watch('routes/**/*.php')",
+		"				.on('change', command);",
+		'		}',
+		'	}',
+		'});',
+		'',
+	]);
+
+	mixConfig
 		.update((content) => content.replace(/\.js/g, '.ts').replace('/js', '/scripts'))
-		.addAfter('postCss', [
-			'.vue()',
-			'.alias({',
-			'  vue$: `${__dirname}/node_modules/vue/dist/vue.esm-bundler.js`,',
-			"  '@': `${__dirname}/resources/views`,",
-			"  '@scripts': `${__dirname}/resources/scripts`",
-			`})`,
-			'.webpackConfig(({ DefinePlugin }) => ({',
-			'		plugins: [',
-			'				new DefinePlugin({',
-			"						__VUE_OPTIONS_API__: 'true',",
-			"						__VUE_PROD_DEVTOOLS__: 'false',",
-			'				}),',
-			'		],',
-			'}))',
+		.addAfter('mix.ts', [
+			'	.vue()',
+			'	.alias({',
+			'	  vue$: `${__dirname}/node_modules/vue/dist/vue.esm-bundler.js`,',
+			'	  ziggy: `${__dirname}/vendor/tightenco/ziggy/dist`,',
+			"	  '@': `${__dirname}/resources/views`,",
+			"	  '@scripts': `${__dirname}/resources/scripts`",
+			`	})`,
+			'	.webpackConfig(({ DefinePlugin }) => ({',
+			'			output: {',
+			'					chunkFilename: `js/chunks/[name].js?id=[chunkhash]`',
+			'			},',
+			'			plugins: [',
+			'					new DefinePlugin({',
+			"							__VUE_OPTIONS_API__: 'true',",
+			"							__VUE_PROD_DEVTOOLS__: 'false',",
+			'					}),',
+			'			],',
+			'	}))',
+			'	.version()',
+			'	.sourceMaps(false)',
+			'	.ziggy()',
 		]);
 
 	// Updates routes
@@ -62,7 +98,8 @@ Preset.group((preset) => {
 	// Adds PHP dependencies
 	preset
 		.editPhpPackages() //
-		.add('inertiajs/inertia-laravel', '^0.3.3');
+		.add('inertiajs/inertia-laravel', '^0.3.3')
+		.add('tightenco/ziggy', '^1.0.3');
 }).withTitle('Updating dependencies...');
 
 // Installs dependencies

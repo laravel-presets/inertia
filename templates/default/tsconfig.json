@@ -2,6 +2,8 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"module": "esnext",
+		"allowJs": true,
+		"outDir": "./temp", // won't actually emit output, just for validity of the config. Required for "allowJs" (for Ziggy auto-complete)
 		"strict": true,
 		"importHelpers": true,
 		"moduleResolution": "node",

@@ -3,8 +3,8 @@
 		<head>
 				<meta charset="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link href="{{ mix('/build/app.css') }}" rel="stylesheet" />
-    		<script src="{{ mix('/build/app.js') }}" defer></script>
+				<link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    			<script src="{{ mix('/js/app.js') }}" defer></script>
 		</head>
 		<body>
 			@inertia
