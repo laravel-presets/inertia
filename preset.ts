@@ -51,34 +51,42 @@ Preset.group((preset) => {
 	mixConfig
 		.update((content) => content.replace(/\.js/g, '.ts').replace('/js', '/scripts'))
 		.addAfter('mix.ts', [
-			'	.vue()',
-			'	.alias({',
-			'	  vue$: `${__dirname}/node_modules/vue/dist/vue.esm-bundler.js`,',
-			'	  ziggy: `${__dirname}/vendor/tightenco/ziggy/dist`,',
-			"	  '@': `${__dirname}/resources/views`,",
-			"	  '@scripts': `${__dirname}/resources/scripts`",
-			`	})`,
-			'	.webpackConfig(({ DefinePlugin }) => ({',
-			'			output: {',
-			'					chunkFilename: `js/chunks/[name].js?id=[chunkhash]`',
-			'			},',
-			'			plugins: [',
-			'					new DefinePlugin({',
-			"							__VUE_OPTIONS_API__: 'true',",
-			"							__VUE_PROD_DEVTOOLS__: 'false',",
-			'					}),',
-			'			],',
-			'	}))',
-			'	.version()',
-			'	.sourceMaps(false)',
-			'	.ziggy()',
-		]);
+			'.vue()',
+			'.alias({',
+			'  vue$: `${__dirname}/node_modules/vue/dist/vue.esm-bundler.js`,',
+			'  ziggy: `${__dirname}/vendor/tightenco/ziggy/dist`,',
+			"  '@': `${__dirname}/resources/views`,",
+			"  '@scripts': `${__dirname}/resources/scripts`",
+			`})`,
+			'.webpackConfig(({ DefinePlugin }) => ({',
+			'		output: {',
+			'				chunkFilename: `js/chunks/[name].js?id=[chunkhash]`',
+			'		},',
+			'		plugins: [',
+			'				new DefinePlugin({',
+			"						__VUE_OPTIONS_API__: 'true',",
+			"						__VUE_PROD_DEVTOOLS__: 'false',",
+			'				}),',
+			'		],',
+			'}))',
+			'.version()',
+			'.sourceMaps(false)',
+			'.ziggy()',
+		])
+		.withIndent(4);
 
 	// Updates routes
 	preset
 		.edit('routes/web.php')
 		.update((content) => content.replace('view', 'inertia').replace('welcome', 'Welcome'))
 		.withTitle('Updating routes...');
+
+	// Add the inertia middleware to the Laravel Kernel
+	preset
+		.edit('app/Http/Kernel.php')
+		.addBefore("'api' =>", '	\\App\\Http\\Middleware\\HandleInertiaRequests::class,')
+		.skipLines(2)
+		.withIndent(9);
 }).withTitle(`Updating the ${color.magenta('Mix')} and ${color.magenta('routes')}...`);
 
 // Adds dependencies
