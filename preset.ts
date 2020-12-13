@@ -4,9 +4,9 @@ Preset.setName('Inertia for Laravel');
 Preset.option('auth', true);
 
 // Installs the Tailwind preset
-// Preset.apply('laravel-presets/tailwindcss')
-// 	.with(['--no-interaction'])
-// 	.withTitle(`Installing ${color.magenta('Tailwind CSS')}...`);
+Preset.apply('laravel-presets/tailwindcss')
+	.with(['--no-interaction'])
+	.withTitle(`Installing ${color.magenta('Tailwind CSS')}...`);
 
 // Deletes unused resources
 Preset.delete(['resources/js', 'resources/views']).withoutTitle();
