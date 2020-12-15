@@ -5,7 +5,7 @@ Preset.option('auth', true);
 
 // Installs the Tailwind preset
 Preset.apply('laravel-presets/tailwindcss')
-	.with(['--no-interaction'])
+	.with(['--no-interaction', '--no-install'])
 	.withTitle(`Installing ${color.magenta('Tailwind CSS')}...`);
 
 // Deletes unused resources
