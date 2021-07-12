@@ -19,12 +19,12 @@
   </a>
   <br />
   <br />
-  <pre align="center">npx use-preset laravel:inertia</pre>
+  <pre align="center">npx apply laravel:inertia</pre>
 </p>
 <br />
 
 <div align="center">
-  This preset is a work-in-progress. In the meantime, take a look at <a href="https://github.com/laravel/breeze">Breeze's</a> Inertia scaffolding.
+  This preset installs Inertia with Vite and Vue in a fresh Laravel application.
   <br />
   <a href="https://github.com/laravel-presets/inertia/blob/main/preset.ts">See the code</a> - <a href="https://usepreset.dev">Preset documentation</a> - <a href="http://inertiajs.com/">Inertia website</a>
 </div>
