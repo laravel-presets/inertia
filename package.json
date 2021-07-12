@@ -4,16 +4,9 @@
 	"author": "Enzo Innocenzi",
 	"license": "MIT",
 	"preset": "preset.ts",
-	"prettier": {
-		"printWidth": 100,
-		"tabWidth": 2,
-		"trailingComma": "all",
-		"singleQuote": true,
-		"arrowParens": "always",
-		"useTabs": true,
-		"semi": true
-	},
 	"devDependencies": {
-		"use-preset": "^0.2"
+		"@innocenzi/eslint-config": "github:innocenzi/eslint-config",
+		"apply": "^0.2",
+		"eslint": "^7.30.0"
 	}
 }

@@ -1,25 +1,28 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
-		"module": "esnext",
-		"strict": true,
-		"importHelpers": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"sourceMap": true,
-		"baseUrl": ".",
-		"types": ["webpack-env"],
-		"paths": {
-			"@/*": ["resources/views/*"],
-			"@scripts/*": ["resources/scripts/*"]
-		},
-		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+			"target": "esnext",
+			"module": "esnext",
+			"moduleResolution": "node",
+			"strict": true,
+			"jsx": "preserve",
+			"sourceMap": true,
+			"resolveJsonModule": true,
+			"esModuleInterop": true,
+			"lib": [
+					"esnext",
+					"dom"
+			],
+			"types": [
+					"vite/client"
+			],
+			"baseUrl": ".",
+			"paths": {
+					"@/*": [
+							"resources/*"
+					]
+			}
 	},
 	"include": [
-		"resources/scripts/**/*.ts",
-		"resources/scripts/**/*.tsx",
-		"resources/scripts/**/*.vue"
-	],
-	"exclude": ["node_modules"]
+			"resources/**/*"
+	]
 }

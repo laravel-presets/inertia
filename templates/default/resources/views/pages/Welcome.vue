@@ -1,10 +1,10 @@
 <template>Hello</template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Default from '@/layouts/Default.vue';
+import layout from '@/layouts/default.vue';
+export default { layout }
+</script>
 
-export default defineComponent({
-	layout: Default,
-});
+<script setup lang="ts">
+//
 </script>

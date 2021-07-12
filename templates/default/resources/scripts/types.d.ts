@@ -1,7 +1,17 @@
-// TODO: PR inertia
+import { DefineComponent, Plugin } from 'vue'
+
 declare module '@inertiajs/inertia-vue3' {
-	export const app: any;
-	export const plugin: {
-		install(vue: any): void;
-	};
+	interface SetupOptions { 
+		el: string | Element
+		app: DefineComponent
+		props: object
+		plugin: Plugin
+	}
+
+	interface InertiaOptions {
+		resolve: (name: string) => DefineComponent
+		setup: (options: SetupOptions) => void
+	}
+
+	export const createInertiaApp: (options: InertiaOptions) => void
 }
