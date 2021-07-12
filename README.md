@@ -19,14 +19,14 @@
   </a>
   <br />
   <br />
-  <pre align="center">npx apply laravel:inertia</pre>
+  <pre><div align="center">npx apply laravel:inertia</div></pre>
 </p>
 <br />
 
 <div align="center">
   This preset installs Inertia with Vite and Vue in a fresh Laravel application.
   <br />
-  <a href="https://github.com/laravel-presets/inertia/blob/main/preset.ts">See the code</a> - <a href="https://usepreset.dev">Preset documentation</a> - <a href="http://inertiajs.com/">Inertia website</a>
+  <a href="https://github.com/innocenzi/laravel-inertia-vite-vue">Sample project</a> - <a href="https://github.com/laravel-presets/inertia/blob/main/preset.ts">See the code</a> - <a href="http://inertiajs.com/">Inertia website</a>
 </div>
 
 <p align="center">
