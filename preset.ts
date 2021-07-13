@@ -13,7 +13,7 @@ Preset.apply('laravel-presets/vite')
 	.withTitle(`Installing ${color.magenta('Vite')}...`);
 
 // Deletes unused resources
-Preset.delete('resources/css').withoutTitle();
+Preset.delete(['resources/css']).withoutTitle();
 
 // Extracts templates
 Preset.extract('default').withTitle(`Extracting default scaffolding...`);
