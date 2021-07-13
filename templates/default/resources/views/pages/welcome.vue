@@ -1,7 +1,7 @@
 <template>Hello</template>
 
 <script lang="ts">
-import layout from '@/layouts/default.vue';
+import layout from '@/views/layouts/default.vue';
 export default { layout }
 </script>
 
