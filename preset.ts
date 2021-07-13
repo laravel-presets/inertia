@@ -20,7 +20,7 @@ Preset.extract('default').withTitle(`Extracting default scaffolding...`);
 
 // Updates routes
 Preset.edit('routes/web.php')
-	.update((content) => content.replace('view', 'inertia'))
+	.update((content) => content.replace('view', 'inertia').replace('app', 'welcome'))
 	.withTitle('Updating routes...');
 
 // Adds dependencies
