@@ -27,13 +27,13 @@ Preset.edit('routes/web.php')
 Preset.group((preset) => {
 	preset
 		.editNodePackages()
-		.add('@inertiajs/inertia', '^0.9.2')
-		.add('@inertiajs/progress', '^0.2.2')
-		.add('@inertiajs/inertia-vue3', '^0.4.7')
-		.add('vue', '^3.1.4')
-		.addDev('@vue/compiler-sfc', '^3.1.4')
-		.addDev('typescript', '^4.3.5')
-		.addDev('@vitejs/plugin-vue', '^1.2.4');
+		.add('@inertiajs/inertia', '^0.10.1')
+		.add('@inertiajs/progress', '^0.2.6')
+		.add('@inertiajs/inertia-vue3', '^0.5.2')
+		.add('vue', '^3.2.6')
+		.addDev('@vue/compiler-sfc', '^3.2.6')
+		.addDev('typescript', '^4.4.2')
+		.addDev('@vitejs/plugin-vue', '^1.6.0');
 
 	// Adds PHP dependencies
 	preset
