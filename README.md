@@ -10,8 +10,8 @@
 
 <p align="center">
   <br />
-  <a href="https://www.npmjs.com/package/use-preset">
-    <img alt="npm" src="https://img.shields.io/npm/v/use-preset?label=preset">
+  <a href="https://www.npmjs.com/package/apply">
+    <img alt="npm" src="https://img.shields.io/npm/v/apply?label=preset">
   </a>
   <span>&nbsp;</span>
   <a href="https://usepreset.dev">
