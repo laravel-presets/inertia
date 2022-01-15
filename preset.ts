@@ -5,6 +5,7 @@ export default definePreset({
 	postInstall: (_, hl) => [
 		`Run the development server with ${hl('npm run dev')}`,
 		`Edit your scripts in ${hl('resources/scripts')}`,
+		`Edit your pages and components in ${hl('resources/views')}`,
 	],
 	handler: async() => {
 		await extractTemplates({
