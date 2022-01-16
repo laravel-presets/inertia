@@ -56,7 +56,15 @@ export default definePreset({
 
 		await installPackages({
 			for: 'node',
-			install: ['vue@next', '@vue/compiler-sfc', '@vitejs/plugin-vue', '@inertiajs/inertia-vue3', 'laravel-vite'],
+			install: [
+				'vue@next',
+				'@vue/compiler-sfc',
+				'@vitejs/plugin-vue',
+				'@inertiajs/inertia',
+				'@inertiajs/inertia-vue3',
+				'laravel-vite',
+				'vite',
+			],
 			title: 'install front-end dependencies',
 		})
 

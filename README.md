@@ -12,7 +12,7 @@
 <br />
 
 <div align="center">
-  This preset installs Inertia with Vue and Vite to a Laravel application.
+  This preset installs Inertia with Vue and Vite in a Laravel application.
   <br />
   The operation may be destructive, so the project must be fresh.
   <br />
