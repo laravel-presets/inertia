@@ -2,7 +2,7 @@ import { definePreset, deletePath, editFiles, executeCommand, extractTemplates, 
 
 export default definePreset({
 	name: 'laravel:inertia',
-	postInstall: (_, hl) => [
+	postInstall: ({ hl }) => [
 		`Run the development server with ${hl('npm run dev')}`,
 		`Edit your scripts in ${hl('resources/scripts')}`,
 		`Edit your pages and components in ${hl('resources/views')}`,

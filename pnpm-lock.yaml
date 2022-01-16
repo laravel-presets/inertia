@@ -2,13 +2,13 @@ lockfileVersion: 5.3
 
 specifiers:
   '@innocenzi/eslint-config': ^0.6.1
-  '@preset/core': ^0.0.5
+  '@preset/core': ^0.0.6
   eslint: ^8.6.0
   typescript: ^4.5.4
 
 devDependencies:
   '@innocenzi/eslint-config': 0.6.1_eslint@8.6.0+typescript@4.5.4
-  '@preset/core': 0.0.5
+  '@preset/core': 0.0.6
   eslint: 8.6.0
   typescript: 4.5.4
 
@@ -128,8 +128,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@preset/core/0.0.5:
-    resolution: {integrity: sha512-puBRqD4uQuOXZXIXpw+hLcOMSEjh/x/HzLSi4IilJPxaaW+keeNI5XH9cOZZe9sXUpO14ENf9OjIUln64HWqEA==}
+  /@preset/core/0.0.6:
+    resolution: {integrity: sha512-PmZw3HuNibxH7S8K/h1UDtLbwnlDhN64yod07Y1z9yBTI7FbwluwDFpVxq2fDabv/H1cmTgMiurgw8LrLGHvRg==}
     dependencies:
       cac: 6.7.12
       debug: 4.3.3
