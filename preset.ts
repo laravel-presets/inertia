@@ -31,9 +31,9 @@ export default definePreset({
 				type: 'add-line',
 				position: 'append',
 				lines: [
-					'VITE_DEV_SERVER_URL=http://localhost:3000',
-					'VITE_DEV_KEY=',
-					'VITE_DEV_CERT=',
+					'DEV_SERVER_URL=http://localhost:3000',
+					'DEV_SERVER_KEY=',
+					'DEV_SERVER_CERT=',
 				],
 			}],
 			title: 'update environment files',
