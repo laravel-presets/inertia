@@ -10,7 +10,7 @@ export default definePreset({
 		`Run the development server with ${hl('npm run dev')}`,
 		`Edit your scripts in ${hl('resources/scripts')}`,
 		`Edit your pages and components in ${hl('resources/views')}`,
-		`Build for production with ${hl('bpm run build')}`,
+		`Build for production with ${hl('npm run build')}`,
 	],
 	handler: async(context) => {
 		if (context.options.base) {
