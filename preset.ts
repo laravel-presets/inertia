@@ -97,8 +97,33 @@ async function installBase() {
 
 	await executeCommand({
 		command: 'php',
+		arguments: ['artisan', 'vendor:publish', '--provider=Inertia\\ServiceProvider'],
+		title: 'publish Inertia configuration',
+	})
+
+	await executeCommand({
+		command: 'php',
 		arguments: ['artisan', 'inertia:middleware'],
 		title: 'publish Inertia middleware',
+	})
+
+	await editFiles({
+		files: 'config/inertia.php',
+		operations: [
+			{
+				type: 'add-line',
+				position: 'before',
+				match: /resource_path\('js\/Pages'\)/,
+				lines: "resource_path('views/pages'),",
+			},
+			{
+				type: 'update-content',
+				update: (content) => content // Fixes weird line returns
+					.replace(/\n\n/g, '\n')
+					.replace(/\/\*/g, '\n    /*'),
+			},
+		],
+		title: 'register Inertia pages for testing',
 	})
 
 	await editFiles({
