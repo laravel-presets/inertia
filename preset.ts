@@ -101,6 +101,24 @@ async function installBase() {
 		title: 'publish Inertia middleware',
 	})
 
+	await editFiles({
+		files: 'app/Http/Middleware/HandleInertiaRequests.php',
+		operations: [
+			{
+				type: 'add-line',
+				position: 'before',
+				match: /return parent::version\(\$request\)/,
+				lines: [
+					"if (file_exists($manifest = public_path(config('vite.build_path') . '/manifest.json'))) {",
+					'    return md5_file($manifest);',
+					'}',
+					'',
+				],
+			},
+		],
+		title: 'register Vite manifest in Inertia version check',
+	})
+
 	await executeCommand({
 		command: 'php',
 		arguments: ['artisan', 'vite:aliases'],
