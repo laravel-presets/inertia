@@ -72,16 +72,24 @@ async function installBase() {
 	await installPackages({
 		for: 'node',
 		install: [
-			'vue@next',
 			'@vue/compiler-sfc',
 			'@vitejs/plugin-vue',
-			'@inertiajs/inertia',
-			'@inertiajs/inertia-vue3',
 			'laravel-vite',
 			'vite',
 		],
+		dev: true,
 		title: 'install front-end dependencies',
 	})
+	
+	await installPackages({
+		for: 'node',
+		install: [
+			'vue@next',
+			'@inertiajs/inertia',
+			'@inertiajs/inertia-vue3',
+		],
+		title: 'install front-end dependencies',
+	})	
 
 	await installPackages({
 		for: 'php',
