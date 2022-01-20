@@ -1,4 +1,4 @@
-import { definePreset, deletePaths, editFiles, executeCommand, extractTemplates, installPackages } from '@preset/core'
+import { definePreset, deletePaths, editFiles, executeCommand, extractTemplates, group, installPackages } from '@preset/core'
 
 export default definePreset({
 	name: 'laravel:inertia',
@@ -69,18 +69,45 @@ async function installBase() {
 		title: 'udpate route file',
 	})
 
-	await installPackages({
-		for: 'node',
-		install: [
-			'vue@next',
-			'@vue/compiler-sfc',
-			'@vitejs/plugin-vue',
-			'@inertiajs/inertia',
-			'@inertiajs/inertia-vue3',
-			'laravel-vite',
-			'vite',
-		],
+	await group({
 		title: 'install front-end dependencies',
+		handler: async() => {
+			await installPackages({
+				for: 'node',
+				install: [
+					'vue@next',
+					'@vue/compiler-sfc',
+					'@vitejs/plugin-vue',
+					'@inertiajs/inertia',
+					'@inertiajs/inertia-vue3',
+					'laravel-vite',
+					'vite',
+				],
+				dev: true,
+			})
+
+			// This is not actually useful but it cleans up the package.json
+			await editFiles({
+				files: 'package.json',
+				operations: [
+					{
+						type: 'edit-json',
+						replace: (json, omit) => ({
+							...json,
+							dependencies: {
+								...json.dependencies,
+								'vue': json.devDependencies.vue,
+								'@inertiajs/inertia': json.devDependencies['@inertiajs/inertia'],
+								'@inertiajs/inertia-vue3': json.devDependencies['@inertiajs/inertia-vue3'],
+							},
+							devDependencies: {
+								...omit(json.devDependencies, 'vue', '@inertiajs/inertia', '@inertiajs/inertia-vue3'),
+							},
+						}),
+					},
+				],
+			})
+		},
 	})
 
 	await installPackages({
