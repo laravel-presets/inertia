@@ -194,7 +194,7 @@ async function installBase() {
 async function installTailwind() {
 	await installPackages({
 		for: 'node',
-		install: ['tailwindcss', 'autoprefixer'],
+		install: ['tailwindcss', 'autoprefixer', 'postcss'],
 		dev: true,
 		title: 'install Tailwind CSS',
 	})
