@@ -5,8 +5,8 @@
   "preset": "preset.ts",
   "devDependencies": {
     "@innocenzi/eslint-config": "^0.7.1",
-    "@preset/core": "0.1.3",
+    "@preset/core": "0.2.0",
     "eslint": "^8.7.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   }
 }
