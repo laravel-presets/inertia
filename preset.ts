@@ -192,7 +192,7 @@ async function installTailwind() {
 	await editFiles({
 		files: 'resources/views/layouts/default.vue',
 		operations: [
-			{ type: 'remove-line', match: /<style>/, start: -1, count: 3 },
+			{ type: 'remove-line', match: /<style>/, start: -1, count: 4 },
 		],
 		title: 'remove inline CSS',
 	})
