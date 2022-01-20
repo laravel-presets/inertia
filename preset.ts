@@ -1,4 +1,4 @@
-import { definePreset, deletePath, editFiles, executeCommand, extractTemplates, installPackages } from '@preset/core'
+import { definePreset, deletePaths, editFiles, executeCommand, extractTemplates, installPackages } from '@preset/core'
 
 export default definePreset({
 	name: 'laravel:inertia',
@@ -29,7 +29,7 @@ async function installBase() {
 		title: 'extract templates',
 	})
 
-	await deletePath({
+	await deletePaths({
 		paths: ['resources/js', 'resources/css', 'resources/views/welcome.blade.php', 'webpack.mix.js'],
 		title: 'remove some default files',
 	})
