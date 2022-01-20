@@ -1,10 +1,11 @@
-import { definePreset, deletePaths, editFiles, executeCommand, extractTemplates, group, installPackages } from '@preset/core'
+import { applyNestedPreset, definePreset, deletePaths, editFiles, executeCommand, extractTemplates, group, installPackages } from '@preset/core'
 
 export default definePreset({
 	name: 'laravel:inertia',
 	options: {
 		base: true,
 		tailwindcss: true,
+		pest: true,
 	},
 	postInstall: ({ hl }) => [
 		`Run the development server with ${hl('npm run dev')}`,
@@ -19,6 +20,10 @@ export default definePreset({
 
 		if (context.options.tailwindcss) {
 			await installTailwind()
+		}
+
+		if (context.options.pest) {
+			await installPest()
 		}
 	},
 })
@@ -222,5 +227,31 @@ async function installTailwind() {
 			{ type: 'remove-line', match: /<style>/, start: -1, count: 4 },
 		],
 		title: 'remove inline CSS',
+	})
+}
+
+async function installPest() {
+	await applyNestedPreset({
+		preset: 'laravel-presets/pest',
+		title: 'install Pest PHP',
+	})
+
+	await editFiles({
+		title: 'disable Vite manifest while testing',
+		files: 'tests/CreatesApplication.php',
+		operations: [
+			{
+				type: 'add-line',
+				match: /use Illuminate\\Contracts\\Console\\Kernel/,
+				lines: 'use Innocenzi\\Vite\\Vite;',
+				position: 'after',
+			},
+			{
+				type: 'add-line',
+				match: /\$app = require/,
+				lines: 'Vite::withoutManifest();\n',
+				position: 'before',
+			},
+		],
 	})
 }
