@@ -12,7 +12,7 @@
 <br />
 
 <div align="center">
-  This preset installs Inertia with Vue, Tailwind CSS, Pest and Vite in a fresh Laravel application.
+  This preset installs <a href="https://inertiajs.com">Inertia</a> with <a href="https://vuejs.org">Vue</a>, <a href="https://tailwindcss.com">Tailwind CSS</a>, <a href="https://pestphp.com">Pest</a> and <a href="https://vitejs.dev">Vite</a> in a fresh Laravel application.
   <br />
   If you don't want to install Tailwind CSS or Pest, use <code>--no-tailwindcss</code> or <code>--no-pest</code>, respectively.
   <br />
