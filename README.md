@@ -17,7 +17,7 @@
   The operation may be destructive, so the project must be fresh.
   <br />
   <br />
-  <a href="https://preset.dev">Learn more</a>
+  <a href="https://github.com/laravel-presets/inertia/tree/boilerplate">Boilerplate for this preset</a> - <a href="https://preset.dev">Learn more</a>
 </div>
 
 <p align="center">
