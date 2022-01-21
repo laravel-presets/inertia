@@ -1,0 +1,75 @@
+name: Generate boilerplate
+
+on:
+  push:
+    branches: ['main']
+    paths-ignore:
+      - '.github'
+      - '.*'
+      - 'README.md'
+  schedule:
+    - cron: '0 12 * * 1' # At 12:00 on Monday
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [8.1]
+        laravel: [^8.0]
+    name: Generate boilerplate [L${{ matrix.laravel }}]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip
+          coverage: none
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.27.0
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: v16
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+      - name: Create Laravel app
+        run: composer create-project laravel/laravel=${{ matrix.laravel }} ./boilerplate --prefer-dist
+
+      - name: Apply Inertia preset
+        run: |
+          cd ./boilerplate
+          npx @preset/cli apply laravel:inertia --no-ssh --debug
+
+      - name: Run tests
+        run: |
+          cd ./boilerplate
+          php artisan test
+
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: boilerplate # The branch name where you want to push the assets
+          FOLDER: boilerplate # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          SQUASH_HISTORY: true
+          MESSAGE: |
+            chore: initialize boilerplate
+
+            This boilerplate was generated from commit: {sha}
