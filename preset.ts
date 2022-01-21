@@ -50,6 +50,7 @@ async function installBase() {
 		operations: [{
 			type: 'add-line',
 			position: 'append',
+			skipIf: (content) => ['DEV_SERVER_URL', 'DEV_SERVER_KEY', 'DEV_SERVER_CERT'].some((key) => content.includes(key)),
 			lines: [
 				'DEV_SERVER_URL=http://localhost:3000',
 				'DEV_SERVER_KEY=',
