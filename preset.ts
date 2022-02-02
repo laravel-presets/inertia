@@ -1,5 +1,3 @@
-import { applyNestedPreset, definePreset, deletePaths, editFiles, executeCommand, extractTemplates, group, installPackages } from '@preset/core'
-
 export default definePreset({
 	name: 'laravel:inertia',
 	options: {
@@ -86,7 +84,7 @@ async function installBase() {
 					'@vitejs/plugin-vue',
 					'@inertiajs/inertia',
 					'@inertiajs/inertia-vue3',
-					'laravel-vite',
+					'vite-plugin-laravel',
 					'vite',
 				],
 				dev: true,
@@ -118,7 +116,7 @@ async function installBase() {
 
 	await installPackages({
 		for: 'php',
-		install: ['innocenzi/laravel-vite', 'inertiajs/inertia-laravel'],
+		install: ['innocenzi/laravel-vite:0.2.*', 'inertiajs/inertia-laravel'],
 		title: 'install php dependencies',
 	})
 
@@ -134,10 +132,38 @@ async function installBase() {
 		title: 'publish Inertia configuration',
 	})
 
-	await executeCommand({
-		command: 'php',
-		arguments: ['artisan', 'inertia:middleware'],
+	await group({
 		title: 'publish Inertia middleware',
+		handler: async() => {
+			await executeCommand({
+				command: 'php',
+				arguments: ['artisan', 'inertia:middleware'],
+			})
+
+			await editFiles({
+				files: 'app/Http/Middleware/HandleInertiaRequests.php',
+				operations: [
+					{
+						type: 'remove-line',
+						match: /array_merge\(parent::share/,
+						count: 1,
+						start: 1,
+					},
+					{
+						type: 'add-line',
+						position: 'after',
+						match: /array_merge\(parent::share/,
+						indent: '            ',
+						lines: [
+							"'versions' => [",
+							"	'php' => PHP_VERSION,",
+							"	'laravel' => \\Illuminate\\Foundation\\Application::VERSION",
+							'],',
+						],
+					},
+				],
+			})
+		},
 	})
 
 	await editFiles({
@@ -177,12 +203,6 @@ async function installBase() {
 		title: 'register Vite manifest in Inertia version check',
 	})
 
-	await executeCommand({
-		command: 'php',
-		arguments: ['artisan', 'vite:aliases'],
-		title: 'generate Vite aliases',
-	})
-
 	await editFiles({
 		files: 'app/Http/Kernel.php',
 		operations: [
@@ -216,8 +236,21 @@ async function installTailwind() {
 	await editFiles({
 		files: 'vite.config.ts',
 		operations: [
-			{ type: 'add-line', lines: ["import tailwindcss from 'tailwindcss'", "import autoprefixer from 'autoprefixer'"], position: 'prepend' },
-			{ type: 'add-line', lines: '.withPostCSS([tailwindcss(), autoprefixer()])', match: /withPlugin/, position: 'before' },
+			{
+				skipIf: (content) => content.includes('import tailwindcss') || content.includes('import autoprefixer'),
+				type: 'add-line',
+				lines: ["import tailwindcss from 'tailwindcss'", "import autoprefixer from 'autoprefixer'"],
+				position: 'prepend',
+			},
+			{
+				type: 'update-content',
+				update: (content) => content.replace('laravel()', `laravel({
+			postcss: [
+				tailwindcss(), 
+				autoprefixer()
+			]
+		})`),
+			},
 		],
 		title: 'register PostCSS plugins',
 	})

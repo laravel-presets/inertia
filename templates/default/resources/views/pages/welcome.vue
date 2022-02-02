@@ -2,6 +2,13 @@
 import LaravelLogo from '@/views/components/logo/laravel.vue'
 import InertiaLogo from '@/views/components/logo/inertia.vue'
 import WelcomeItem from '@/views/components/welcome-item.vue'
+
+defineProps<{
+	versions: {
+		php: string
+		laravel: string
+	}
+}>()
 </script>
 
 <template layout>
@@ -75,6 +82,11 @@ import WelcomeItem from '@/views/components/welcome-item.vue'
 							Sponsor
 						</a>
 					</div>
+				</div>
+
+				<div class="text-center text-sm text-zinc-500 sm:text-left space-x-2">
+					<span>Laravel v{{ versions.laravel }}</span>
+					<span>(PHP {{ versions.php }})</span>
 				</div>
 			</div>
 		</div>
