@@ -269,23 +269,4 @@ async function installPest() {
 		preset: 'laravel-presets/pest',
 		title: 'install Pest PHP',
 	})
-
-	await editFiles({
-		title: 'disable Vite manifest while testing',
-		files: 'tests/CreatesApplication.php',
-		operations: [
-			{
-				type: 'add-line',
-				match: /use Illuminate\\Contracts\\Console\\Kernel/,
-				lines: 'use Innocenzi\\Vite\\Vite;',
-				position: 'after',
-			},
-			{
-				type: 'add-line',
-				match: /\$app = require/,
-				lines: 'Vite::withoutManifest();\n',
-				position: 'before',
-			},
-		],
-	})
 }
