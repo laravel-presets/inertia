@@ -151,10 +151,8 @@ async function installInertia(tailwindcss: boolean) {
 				files: 'config/inertia.php',
 				operations: [
 					{
-						type: 'add-line',
-						position: 'before',
-						match: /resource_path\('js\/Pages'\)/,
-						lines: "resource_path('views/pages'),",
+						type: 'update-content',
+						update: (content) => content.replace('js/Pages', 'views/pages'),
 					},
 					{
 						type: 'update-content',

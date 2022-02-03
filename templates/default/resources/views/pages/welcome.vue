@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LaravelLogo from '@/views/components/logo/laravel.vue'
-import InertiaLogo from '@/views/components/logo/inertia.vue'
-import WelcomeItem from '@/views/components/welcome-item.vue'
+import LaravelLogo from '@/views/components/laravel-logo.vue'
+import InertiaLogo from '@/views/components/inertia-logo.vue'
+import ResourceBlock from '@/views/components/resource-block.vue'
 
 defineProps<{
 	versions: {
@@ -16,34 +16,34 @@ defineProps<{
 		<div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
 			<div class="flex justify-center items-center pt-8 space-x-12 sm:pt-0">
 				<LaravelLogo class="h-20 w-auto text-[#EF3B2D]" />
-				<InertiaLogo class="h-11 w-auto text-purple-500" />
+				<InertiaLogo class="h-11 w-auto text-[#826ded]" />
 			</div>
 
 			<div class="mt-8 bg-white dark:bg-zinc-800 overflow-hidden shadow sm:rounded-lg">
 				<div class="grid grid-cols-1 md:grid-cols-2">
-					<WelcomeItem
+					<ResourceBlock
 						name="Documentation"
 						description="Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end."
 					/>
 
-					<WelcomeItem
+					<ResourceBlock
 						class="p-6 border-t border-zinc-200 dark:border-zinc-700 md:border-t-0 md:border-l"
 						name="Laracasts"
 						description="Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process."
 					/>
 
-					<WelcomeItem
+					<ResourceBlock
 						class="p-6 border-t border-zinc-200 dark:border-zinc-700"
 						name="Laravel News"
 						description="Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials."
 					/>
 
-					<WelcomeItem
+					<ResourceBlock
 						class="p-6 border-t border-zinc-200 dark:border-zinc-700 md:border-l"
 						name="Vibrant Ecosystem"
 					>
 						Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-					</WelcomeItem>
+					</ResourceBlock>
 				</div>
 			</div>
 
