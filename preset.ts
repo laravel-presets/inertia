@@ -4,6 +4,7 @@ export default definePreset({
 		base: true,
 		tailwindcss: true,
 		pest: true,
+		https: false,
 	},
 	postInstall: ({ hl }) => [
 		`Run the development server with ${hl('npm run dev')}`,
@@ -13,79 +14,42 @@ export default definePreset({
 	],
 	handler: async(context) => {
 		if (context.options.base) {
-			await installBase()
-		}
-
-		if (context.options.tailwindcss) {
-			await installTailwind()
+			await applyNestedPreset({
+				title: 'install Vite',
+				preset: 'laravel-presets/vite',
+				inheritsArguments: true,
+			})
 		}
 
 		if (context.options.pest) {
-			await installPest()
+			await applyNestedPreset({
+				title: 'install Pest',
+				preset: 'laravel-presets/pest',
+			})
 		}
+
+		await installInertia(context.options.tailwindcss)
 	},
 })
 
-async function installBase() {
-	await extractTemplates({
-		from: 'default',
-		title: 'extract templates',
-	})
-
-	await deletePaths({
-		paths: ['resources/js', 'resources/css', 'resources/views/welcome.blade.php', 'webpack.mix.js'],
-		title: 'remove some default files',
-	})
-
-	await editFiles({
-		files: '.gitignore',
-		operations: [{ type: 'add-line', position: 'prepend', lines: '/public/build' }],
-		title: 'update .gitignore',
-	})
-
-	await editFiles({
-		files: ['.env', '.env.example'],
-		operations: [{
-			type: 'add-line',
-			position: 'append',
-			skipIf: (content) => ['DEV_SERVER_URL', 'DEV_SERVER_KEY', 'DEV_SERVER_CERT'].some((key) => content.includes(key)),
-			lines: [
-				'DEV_SERVER_URL=http://localhost:3000',
-				'DEV_SERVER_KEY=',
-				'DEV_SERVER_CERT=',
-			],
-		}],
-		title: 'update environment files',
-	})
-
-	await editFiles({
-		files: 'package.json',
-		operations: [
-			{ type: 'edit-json', delete: ['scripts', 'devDependencies'] },
-			{ type: 'edit-json', merge: { scripts: { dev: 'vite', build: 'vite build' } } },
-		],
-		title: 'update package.json',
-	})
-
-	await editFiles({
-		files: 'routes/web.php',
-		operations: [{ type: 'update-content', update: (r) => r.replace("view('welcome')", "inertia('welcome')") }],
-		title: 'udpate route file',
+async function installInertia(tailwindcss: boolean) {
+	await installPackages({
+		title: 'install PHP dependencies',
+		for: 'php',
+		packages: ['inertiajs/inertia-laravel'],
 	})
 
 	await group({
-		title: 'install front-end dependencies',
+		title: 'install Node dependencies',
 		handler: async() => {
 			await installPackages({
 				for: 'node',
-				install: [
+				packages: [
 					'vue@next',
 					'@vue/compiler-sfc',
 					'@vitejs/plugin-vue',
 					'@inertiajs/inertia',
 					'@inertiajs/inertia-vue3',
-					'vite-plugin-laravel',
-					'vite',
 				],
 				dev: true,
 			})
@@ -114,35 +78,53 @@ async function installBase() {
 		},
 	})
 
-	await installPackages({
-		for: 'php',
-		install: ['innocenzi/laravel-vite:0.2.*', 'inertiajs/inertia-laravel'],
-		title: 'install php dependencies',
-	})
-
-	await executeCommand({
-		command: 'php',
-		arguments: ['artisan', 'vendor:publish', '--tag=vite-config'],
-		title: 'publish Laravel Vite configuration',
-	})
-
-	await executeCommand({
-		command: 'php',
-		arguments: ['artisan', 'vendor:publish', '--provider=Inertia\\ServiceProvider'],
-		title: 'publish Inertia configuration',
-	})
-
 	await group({
-		title: 'publish Inertia middleware',
+		title: 'install Inertia scaffolding',
 		handler: async() => {
+			await extractTemplates({
+				title: 'extract templates',
+				from: 'default',
+			})
+
+			await deletePaths({
+				title: 'remove default view',
+				paths: ['resources/views/welcome.blade.php'],
+			})
+
+			await editFiles({
+				title: 'udpate route file',
+				files: 'routes/web.php',
+				operations: [{ type: 'update-content', update: (r) => r.replace("view('welcome')", "inertia('welcome')") }],
+			})
+
 			await executeCommand({
+				title: 'publish Inertia configuration',
+				command: 'php',
+				arguments: ['artisan', 'vendor:publish', '--provider=Inertia\\ServiceProvider'],
+			})
+
+			await executeCommand({
+				title: 'publish Inertia middleware',
 				command: 'php',
 				arguments: ['artisan', 'inertia:middleware'],
 			})
 
 			await editFiles({
+				title: 'update Inertia middleware',
 				files: 'app/Http/Middleware/HandleInertiaRequests.php',
 				operations: [
+					{
+						type: 'add-line',
+						position: 'before',
+						match: /return parent::version\(\$request\)/,
+						lines: [
+							'return vite()->getHash();',
+						],
+					},
+					{
+						type: 'remove-line',
+						match: /return parent::version\(\$request\)/,
+					},
 					{
 						type: 'remove-line',
 						match: /array_merge\(parent::share/,
@@ -163,110 +145,68 @@ async function installBase() {
 					},
 				],
 			})
-		},
-	})
 
-	await editFiles({
-		files: 'config/inertia.php',
-		operations: [
-			{
-				type: 'add-line',
-				position: 'before',
-				match: /resource_path\('js\/Pages'\)/,
-				lines: "resource_path('views/pages'),",
-			},
-			{
-				type: 'update-content',
-				update: (content) => content // Fixes weird line returns
-					.replace(/\n\n/g, '\n')
-					.replace(/\/\*/g, '\n    /*'),
-			},
-		],
-		title: 'register Inertia pages for testing',
-	})
-
-	await editFiles({
-		files: 'app/Http/Middleware/HandleInertiaRequests.php',
-		operations: [
-			{
-				type: 'add-line',
-				position: 'before',
-				match: /return parent::version\(\$request\)/,
-				lines: [
-					"if (file_exists($manifest = public_path(config('vite.build_path') . '/manifest.json'))) {",
-					'    return md5_file($manifest);',
-					'}',
-					'',
+			await editFiles({
+				title: 'register Inertia pages for testing',
+				files: 'config/inertia.php',
+				operations: [
+					{
+						type: 'add-line',
+						position: 'before',
+						match: /resource_path\('js\/Pages'\)/,
+						lines: "resource_path('views/pages'),",
+					},
+					{
+						type: 'update-content',
+						update: (content) => content // Fixes weird line returns
+							.replace(/\n\n/g, '\n')
+							.replace(/\/\*/g, '\n    /*'),
+					},
 				],
-			},
-		],
-		title: 'register Vite manifest in Inertia version check',
-	})
+			})
 
-	await editFiles({
-		files: 'app/Http/Kernel.php',
-		operations: [
-			{ type: 'add-line', position: 'after', match: /SubstituteBindings::class,/, lines: '\\App\\Http\\Middleware\\HandleInertiaRequests::class,' },
-		],
-		title: 'register Inertia middleware',
-	})
-}
+			await editFiles({
+				title: 'register Inertia middleware',
+				files: 'app/Http/Kernel.php',
+				operations: [
+					{ type: 'add-line', position: 'after', match: /SubstituteBindings::class,/, lines: '\\App\\Http\\Middleware\\HandleInertiaRequests::class,' },
+				],
+			})
 
-async function installTailwind() {
-	await installPackages({
-		for: 'node',
-		install: ['tailwindcss', 'autoprefixer', 'postcss'],
-		dev: true,
-		title: 'install Tailwind CSS',
-	})
+			await editFiles({
+				title: 'update Vite config',
+				files: 'vite.config.ts',
+				operations: [
+					{
+						type: 'add-line',
+						position: 'after',
+						match: /vite-plugin-laravel/,
+						lines: [
+							"import vue from '@vitejs/plugin-vue'",
+							"import inertia from './resources/scripts/vite/inertia-layout'",
+						],
+					},
+					{
+						type: 'add-line',
+						position: 'before',
+						match: /laravel\(/,
+						lines: [
+							'inertia(),',
+							'vue(),',
+						],
+					},
+				],
+			})
 
-	await extractTemplates({
-		from: 'tailwind',
-		title: 'extract Tailwind CSS config',
-	})
-
-	await editFiles({
-		files: 'resources/scripts/main.ts',
-		operations: [
-			{ type: 'add-line', lines: ["import 'tailwindcss/tailwind.css'"], position: 'prepend' },
-		],
-		title: 'add Tailwind CSS imports',
-	})
-
-	await editFiles({
-		files: 'vite.config.ts',
-		operations: [
-			{
-				skipIf: (content) => content.includes('import tailwindcss') || content.includes('import autoprefixer'),
-				type: 'add-line',
-				lines: ["import tailwindcss from 'tailwindcss'", "import autoprefixer from 'autoprefixer'"],
-				position: 'prepend',
-			},
-			{
-				type: 'update-content',
-				update: (content) => content.replace('laravel()', `laravel({
-			postcss: [
-				tailwindcss(), 
-				autoprefixer()
-			]
-		})`),
-			},
-		],
-		title: 'register PostCSS plugins',
-	})
-
-	await editFiles({
-		files: 'resources/views/layouts/default.vue',
-		operations: [
-			{ type: 'remove-line', match: /<style>/, start: -1, count: 4 },
-		],
-		title: 'remove inline CSS',
-	})
-}
-
-async function installPest() {
-	await applyNestedPreset({
-		preset: 'laravel-presets/pest',
-		title: 'install Pest PHP',
+			if (tailwindcss) {
+				await editFiles({
+					title: 'remove inline CSS',
+					files: 'resources/views/layouts/default.vue',
+					operations: [
+						{ type: 'remove-line', match: /<style>/, start: -1, count: 4 },
+					],
+				})
+			}
+		},
 	})
 }
