@@ -25,6 +25,7 @@ export default definePreset({
 			await applyNestedPreset({
 				title: 'install Pest',
 				preset: 'laravel-presets/pest',
+				inheritsArguments: true,
 			})
 		}
 
