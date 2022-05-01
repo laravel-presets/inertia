@@ -16,7 +16,7 @@ export default (layouts: string = '@/views/layouts/'): Plugin => ({
 
 		const isTypeScript = /lang=['"]ts['"]/.test(code)
 
-		return code.replace(TEMPLATE_LAYOUT_REGEX, (_, __, layoutName) => `
+		return code.replace(TEMPLATE_LAYOUT_REGEX, (_, layoutName) => `
 			<script${isTypeScript ? ' lang="ts"' : ''}>
 			import layout from '${layouts}${layoutName ?? 'default'}.vue'
 			export default { layout }
