@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite'
 
 const PLUGIN_NAME = 'vite:inertia:layout'
-const TEMPLATE_LAYOUT_REGEX = /<template +layout(?: *= *['"]([-_\w\/]+)['"] *)?>/
+const TEMPLATE_LAYOUT_REGEX = /<template +layout(?: *= *['"]([-_\w/]+)['"] *)?>/
 
 /**
  * A basic Vite plugin that adds a <template layout="name"> syntax to Vite SFCs.
